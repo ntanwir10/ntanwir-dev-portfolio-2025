@@ -36,7 +36,7 @@ export default function About() {
               </p>
               <p className="mt-4 text-lg text-muted-foreground">
                 I believe in writing clean, maintainable code and staying up-to-date with the
-                latest industry trends and best practices. When I'm not coding, you can find me
+                latest industry trends and best practices. When I&apos;m not coding, you can find me
                 exploring new technologies, contributing to open-source projects, or sharing my
                 knowledge with the developer community.
               </p>

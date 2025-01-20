@@ -192,7 +192,7 @@ export default function Contact() {
                   animate={{ opacity: 1 }}
                   className="text-center text-sm text-green-500"
                 >
-                  Thank you for your message! I'll get back to you soon.
+                  Thank you for your message! I&apos;ll get back to you soon.
                 </motion.p>
               )}
             </motion.form>
