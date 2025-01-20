@@ -5,13 +5,20 @@ import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from "react-icons/fa";
 import { Header } from "@/components/layout/Header";
 import { projects } from "@/lib/projects";
 
+type Props = {
+  params: {
+    id: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 export function generateStaticParams() {
   return projects.map((project) => ({
     id: project.id,
   }));
 }
 
-export default async function ProjectPage({ params }: { params: { id: string } }) {
+export default function ProjectPage({ params, searchParams }: Props) {
   const project = projects.find((p) => p.id === params.id);
 
   if (!project) {
