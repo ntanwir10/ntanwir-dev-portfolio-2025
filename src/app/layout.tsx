@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { Footer } from "@/components/layout/Footer";
+import { ConnectSectionWrapper } from "@/components/shared/ConnectSectionWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <ConnectSectionWrapper />
           <Footer />
         </ThemeProvider>
       </body>
