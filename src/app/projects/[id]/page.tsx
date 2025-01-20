@@ -9,7 +9,6 @@ type Props = {
   params: {
     id: string;
   };
-  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export function generateStaticParams() {
@@ -18,7 +17,7 @@ export function generateStaticParams() {
   }));
 }
 
-export default function ProjectPage({ params, searchParams }: Props) {
+export default function ProjectPage({ params }: Props) {
   const project = projects.find((p) => p.id === params.id);
 
   if (!project) {
