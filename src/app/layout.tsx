@@ -9,8 +9,8 @@ import { ConnectSectionWrapper } from "@/components/shared/ConnectSectionWrapper
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Nauman Tanwir | Full Stack Developer",
-  description: "Full Stack Developer portfolio showcasing projects and skills",
+  title: "Nauman Tanwir | Full Stack Engineer and Cloud Enthusiast",
+  description: "An experienced Full Stack engineer with a passion for building web applications and solving complex problems.",
   icons: {
     icon: [
       {
