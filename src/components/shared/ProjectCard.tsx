@@ -32,36 +32,42 @@ const getPlaceholderImage = (width: number, height: number, text: string) =>
 export function ProjectCard({ project }: { project: Project }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const maxLength = 100;
+  const [isImageLoading, setIsImageLoading] = useState(true);
+  const maxLength = 150;
   const shouldShowButton = project.description.length > maxLength;
-  const displayText = isExpanded ? project.description : project.description.slice(0, maxLength);
-
-  const imageSrc = imageError 
-    ? getPlaceholderImage(600, 400, project.title)
-    : project.image;
+  const displayText = isExpanded
+    ? project.description
+    : project.description.slice(0, maxLength);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="group relative overflow-hidden rounded-lg border bg-background p-2"
+      layout
+      className="group relative overflow-hidden rounded-lg border bg-card"
     >
-      <div className="aspect-video overflow-hidden rounded-md bg-muted">
+      <Link href={`/projects/${project.id}`} className="relative block aspect-video">
+        {isImageLoading && (
+          <div 
+            className="absolute inset-0 z-10"
+            style={{
+              backgroundImage: `url(data:image/svg+xml;base64,${toBase64(shimmer(1920, 1080))})`,
+              backgroundSize: 'cover'
+            }}
+          />
+        )}
         <Image
-          src={imageSrc}
+          src={imageError ? getPlaceholderImage(1920, 1080, project.title) : project.image}
           alt={project.title}
-          width={600}
-          height={400}
-          priority={false}
-          onError={() => setImageError(true)}
-          onLoadingComplete={() => setIsLoading(false)}
-          className={`object-cover transition-all duration-300 group-hover:scale-105 ${
-            isLoading ? "scale-110 blur-sm" : "scale-100 blur-0"
+          fill
+          className={`object-cover transition-transform duration-300 group-hover:scale-105 ${
+            isImageLoading ? 'opacity-0' : 'opacity-100'
           }`}
+          onLoadingComplete={() => setIsImageLoading(false)}
+          onError={() => {
+            setImageError(true);
+            setIsImageLoading(false);
+          }}
         />
-      </div>
+      </Link>
       <div className="p-4">
         <h3 className="text-xl font-bold">{project.title}</h3>
         <div className="mt-2">
