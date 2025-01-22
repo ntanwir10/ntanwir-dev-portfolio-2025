@@ -3,19 +3,39 @@ import { Header } from "@/components/layout/Header";
 const skills = [
   {
     category: "Frontend",
-    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5/CSS3"],
+    technologies: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "HTML5/CSS3"],
   },
   {
     category: "Backend",
-    technologies: ["Node.js", "Express", "Python", "RESTful APIs", "GraphQL"],
+    technologies: ["Node.js", "Express", "Python", "FastAPI", "RESTful APIs", "OAuth", "Passport.js", "JWT", "Serverless", "Micro-services"],
   },
   {
     category: "Database",
-    technologies: ["MongoDB", "PostgreSQL", "MySQL", "Redis"],
+    technologies: ["MongoDB", "PostgreSQL", "MySQL", "Firebase", "AWS DynamoDB",],
   },
   {
     category: "DevOps & Tools",
-    technologies: ["Git", "Docker", "AWS", "CI/CD", "Linux"],
+    technologies: ["Git", "GitHub Actions", "YAML", "Docker", "Docker Compose", "Kubernetes", "CI/CD", "Linux"]
+  },
+  {
+    category: "AWS",
+    technologies: ["AWS Lambda", "Amazon API Gateway", "AWS EC2", "AWS S3", "AWS CloudFormation"],
+  },
+  {
+    category: "Azure",
+    technologies: ["Azure Functions", "Azure App Service", "Azure Storage", "Azure Active Directory", "ARM Templates"],
+  },
+  {
+    category: "Payment Gateways",
+    technologies: ["Stripe", "PayPal"],
+  },
+  {
+    category: "Data visualization",
+    technologies: ["Chart.js", "D3.js"],
+  },
+  {
+    category: "Testing",
+    technologies: ["Jest (Unit Testing)", "Cypress (End-to-End Testing)"],
   },
 ];
 
@@ -29,7 +49,7 @@ export default function About() {
             <h1 className="mb-8 text-4xl font-bold">About Me</h1>
             <div className="prose prose-lg dark:prose-invert">
               <p className="text-lg text-muted-foreground">
-                I am a passionate Full Stack Developer with a strong foundation in web technologies
+                I am an experienced and passionate Full Stack Developer with a strong foundation in web technologies
                 and a keen eye for creating elegant solutions to complex problems. My journey in
                 software development has equipped me with a diverse skill set and the ability to
                 work effectively across the entire development stack.

@@ -5,6 +5,9 @@ import { usePathname } from "next/navigation";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
+import { FaDownload, FaBars } from "react-icons/fa";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import { useEffect, useState } from "react";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -16,43 +19,93 @@ const navigation = [
 export function Header() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleDownloadResume = () => {
+    const link = document.createElement("a");
+    link.href = "/resume.pdf";
+    link.download = "nauman-tanwir-resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
-        <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <span className="hidden font-bold sm:inline-block">
-              Nauman Tanwir
-            </span>
+      <div className="container flex h-14 items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Sheet>
+            <SheetTrigger className="mr-2 md:hidden">
+              <FaBars className="h-5 w-5" />
+            </SheetTrigger>
+            <SheetContent side="left" className="w-64">
+              <SheetTitle>Navigation</SheetTitle>
+              <div className="mt-6 flex flex-col gap-4">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "text-lg transition-colors hover:text-foreground/80",
+                      pathname === item.href
+                        ? "text-foreground"
+                        : "text-foreground/60"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="font-bold">Nauman Tanwir</span>
           </Link>
-          <nav className="flex items-center space-x-6 text-sm font-medium">
-            {navigation.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "transition-colors hover:text-foreground/80",
-                  pathname === item.href
-                    ? "text-foreground"
-                    : "text-foreground/60"
-                )}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
         </div>
-        <button
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-          className="ml-auto h-8 w-8 rounded-lg bg-zinc-100 p-2 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700"
-        >
-          <div className="relative h-4 w-4">
-            <SunIcon className="absolute h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <MoonIcon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </div>
-        </button>
+
+        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+          {navigation.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "transition-colors hover:text-foreground/80",
+                pathname === item.href
+                  ? "text-foreground"
+                  : "text-foreground/60"
+              )}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleDownloadResume}
+            className="hidden md:inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
+          >
+            <FaDownload className="h-4 w-4" />
+            Download Resume
+          </button>
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="rounded-md p-2 hover:bg-accent"
+            >
+              {theme === "light" ? (
+                <MoonIcon className="h-5 w-5" />
+              ) : (
+                <SunIcon className="h-5 w-5" />
+              )}
+            </button>
+          )}
+        </div>
       </div>
     </header>
   );
-} 
+}

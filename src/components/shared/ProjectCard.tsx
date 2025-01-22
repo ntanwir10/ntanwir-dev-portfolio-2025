@@ -5,8 +5,42 @@ import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import type { Project } from "@/lib/projects";
+import { useState } from "react";
+
+const shimmer = (w: number, h: number) => `
+<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="g">
+      <stop stop-color="#333" offset="20%" />
+      <stop stop-color="#222" offset="50%" />
+      <stop stop-color="#333" offset="70%" />
+    </linearGradient>
+  </defs>
+  <rect width="${w}" height="${h}" fill="#333" />
+  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
+  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+</svg>`;
+
+const toBase64 = (str: string) =>
+  typeof window === "undefined"
+    ? Buffer.from(str).toString("base64")
+    : window.btoa(str);
+
+const getPlaceholderImage = (width: number, height: number, text: string) => 
+  `https://placehold.co/${width}x${height}/1F2937/ffffff/png?text=${encodeURIComponent(text)}`;
 
 export function ProjectCard({ project }: { project: Project }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const maxLength = 100;
+  const shouldShowButton = project.description.length > maxLength;
+  const displayText = isExpanded ? project.description : project.description.slice(0, maxLength);
+
+  const imageSrc = imageError 
+    ? getPlaceholderImage(600, 400, project.title)
+    : project.image;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -14,18 +48,36 @@ export function ProjectCard({ project }: { project: Project }) {
       transition={{ duration: 0.3 }}
       className="group relative overflow-hidden rounded-lg border bg-background p-2"
     >
-      <div className="aspect-video overflow-hidden rounded-md">
+      <div className="aspect-video overflow-hidden rounded-md bg-muted">
         <Image
-          src={project.image}
+          src={imageSrc}
           alt={project.title}
           width={600}
           height={400}
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          priority={false}
+          onError={() => setImageError(true)}
+          onLoadingComplete={() => setIsLoading(false)}
+          className={`object-cover transition-all duration-300 group-hover:scale-105 ${
+            isLoading ? "scale-110 blur-sm" : "scale-100 blur-0"
+          }`}
         />
       </div>
       <div className="p-4">
         <h3 className="text-xl font-bold">{project.title}</h3>
-        <p className="mt-2 text-sm text-muted-foreground">{project.description}</p>
+        <div className="mt-2">
+          <p className="text-sm text-muted-foreground">
+            {displayText}
+            {!isExpanded && shouldShowButton && "..."}
+          </p>
+          {shouldShowButton && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="mt-1 text-sm font-medium text-primary hover:text-primary/80"
+            >
+              {isExpanded ? "Read less" : "Read more"}
+            </button>
+          )}
+        </div>
         <div className="mt-4 flex flex-wrap gap-2">
           {project.technologies.map((tech) => (
             <span
