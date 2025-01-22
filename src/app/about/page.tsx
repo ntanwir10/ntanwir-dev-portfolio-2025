@@ -49,10 +49,7 @@ export default function About() {
             <h1 className="mb-8 text-4xl font-bold">About Me</h1>
             <div className="prose prose-lg dark:prose-invert">
               <p className="text-lg text-muted-foreground">
-                I am an experienced and passionate Full Stack Developer with a strong foundation in web technologies
-                and a keen eye for creating elegant solutions to complex problems. My journey in
-                software development has equipped me with a diverse skill set and the ability to
-                work effectively across the entire development stack.
+                I am an experienced and passionate Full Stack Developer with a strong foundation in web technologies and a keen eye for creating elegant solutions to complex problems. My journey in software development has equipped me with a diverse skill set and the ability to work effectively across the entire development stack.
               </p>
               <p className="mt-4 text-lg text-muted-foreground">
                 I believe in writing clean, maintainable code and staying up-to-date with the

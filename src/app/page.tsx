@@ -10,9 +10,9 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1">
-        <section className="container py-12 md:py-24">
-          <div className="grid items-center gap-8 lg:grid-cols-2">
+      <main className="flex-1 flex flex-col justify-center">
+        <section className="container py-8">
+          <div className="grid items-center gap-6 lg:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -25,25 +25,23 @@ export default function Home() {
                   Nauman Tanwir
                 </span>
               </h1>
-              <h2 className="text-2xl font-medium text-muted-foreground md:text-3xl">
-                A Full-Stack Developer &
-                <br />
-                Design Enthusiast
+              <h2 className="text-xl font-medium text-muted-foreground md:text-2xl">
+                A Full-Stack Developer & Cloud IaC Enthusiast
               </h2>
-              <p className="max-w-[600px] text-lg text-muted-foreground">
-                I build accessible, inclusive products and digital experiences for the web.
+              <p className="max-w-[600px] text-base text-muted-foreground md:text-lg">
+                I build and architect scalable, inclusive products and digital experiences.
               </p>
               <div className="flex gap-4">
                 <Link
                   href="/projects"
-                  className="group inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-primary-foreground transition-colors hover:bg-primary/90"
+                  className="group inline-flex items-center gap-2 rounded-lg bg-black px-4 py-2 text-white transition-colors hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
                 >
                   View Projects
                   <FaArrowRight className="transition-transform group-hover:translate-x-1" />
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-lg border px-4 py-2 transition-colors hover:bg-accent"
+                  className="inline-flex items-center gap-2 rounded-lg border border-black px-4 py-2 transition-colors hover:bg-gray-100 dark:border-white dark:hover:bg-white/10"
                 >
                   Get in Touch
                 </Link>
@@ -54,7 +52,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="relative mx-auto aspect-square w-full max-w-[500px]"
+              className="relative mx-auto aspect-square w-full max-w-[400px]"
             >
               <Image
                 src="/developer-illustration.svg"
