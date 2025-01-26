@@ -24,7 +24,7 @@ export const projects: Project[] = [
     id: "cloudUpload",
     title: "Cloud Upload CLI",
     description: "This is an efficient bash-based CLI tool allows quick and effortless file uploads to Amazon S3 cloud storage, ensuring a user-friendly experience with enhanced features.",
-    image: "/cloud_upload.png",
+    image: "/clouduploadcli.png",
     technologies: ["Bash", "Shell Scripting", "AWS CLI", "AWS S3", "AWS IAM"],
     githubUrl: "https://github.com/ntanwir10/Bash-CloudUploaderCLI",
     // liveUrl: "https://github.com/ntanwir10/cloud-upload-cli",

@@ -44,7 +44,7 @@ export function ProjectCard({ project }: { project: Project }) {
       layout
       className="group relative overflow-hidden rounded-lg border bg-card"
     >
-      <Link href={`/projects/${project.id}`} className="relative block aspect-video">
+      <Link href={`/projects/${project.id}`} className="relative block w-full h-[240px] overflow-hidden">
         {isImageLoading && (
           <div 
             className="absolute inset-0 z-10"
@@ -58,7 +58,7 @@ export function ProjectCard({ project }: { project: Project }) {
           src={imageError ? getPlaceholderImage(1920, 1080, project.title) : project.image}
           alt={project.title}
           fill
-          className={`object-cover transition-transform duration-300 group-hover:scale-105 ${
+          className={`object-contain object-center transition-transform duration-300 group-hover:scale-105 ${
             isImageLoading ? 'opacity-0' : 'opacity-100'
           }`}
           onLoadingComplete={() => setIsImageLoading(false)}
