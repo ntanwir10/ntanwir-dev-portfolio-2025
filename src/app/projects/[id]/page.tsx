@@ -5,12 +5,10 @@ import { Header } from "@/components/layout/Header";
 import { projects } from "@/lib/projects";
 import { ProjectImage } from "./ProjectImage";
 
-type Props = {
-  params: {
-    id: string;
-  };
+interface PageProps {
+  params: Promise<{ id: string }>;
   searchParams: { [key: string]: string | string[] | undefined };
-};
+}
 
 export function generateStaticParams() {
   return projects.map((project) => ({
@@ -18,8 +16,8 @@ export function generateStaticParams() {
   }));
 }
 
-export default function ProjectPage({ params }: Props) {
-  const { id } = params;
+export default async function ProjectPage({ params }: PageProps) {
+  const { id } = await params;
   const project = projects.find((p) => p.id === id);
 
   if (!project) {
