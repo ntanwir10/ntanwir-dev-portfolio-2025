@@ -7,7 +7,7 @@ import { ProjectImage } from "./ProjectImage";
 
 interface PageProps {
   params: Promise<{ id: string }>;
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export function generateStaticParams() {
@@ -16,8 +16,9 @@ export function generateStaticParams() {
   }));
 }
 
-export default async function ProjectPage({ params }: PageProps) {
+export default async function ProjectPage({ params, searchParams }: PageProps) {
   const { id } = await params;
+  await searchParams; // we need to await this even if we don't use it
   const project = projects.find((p) => p.id === id);
 
   if (!project) {
