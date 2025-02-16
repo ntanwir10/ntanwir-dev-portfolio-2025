@@ -29,6 +29,9 @@ const toBase64 = (str: string) =>
 const getPlaceholderImage = (width: number, height: number, text: string) => 
   `https://placehold.co/${width}x${height}/1F2937/ffffff/png?text=${encodeURIComponent(text)}`;
 
+// Projects that should always use placeholder images
+const PLACEHOLDER_PROJECTS = ["scrape_free_proxy", "city_api"];
+
 export function ProjectCard({ project }: { project: Project }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -38,6 +41,11 @@ export function ProjectCard({ project }: { project: Project }) {
   const displayText = isExpanded
     ? project.description
     : project.description.slice(0, maxLength);
+
+  const shouldUsePlaceholder = imageError || PLACEHOLDER_PROJECTS.includes(project.id);
+  const imageUrl = shouldUsePlaceholder 
+    ? getPlaceholderImage(1920, 1080, project.title) 
+    : project.image;
 
   return (
     <motion.div
@@ -55,17 +63,21 @@ export function ProjectCard({ project }: { project: Project }) {
           />
         )}
         <Image
-          src={imageError ? getPlaceholderImage(1920, 1080, project.title) : project.image}
+          src={imageUrl}
           alt={project.title}
           fill
-          className={`object-contain object-center transition-transform duration-300 group-hover:scale-105 ${
-            isImageLoading ? 'opacity-0' : 'opacity-100'
+          className={`object-contain object-center transition-all duration-700 ease-in-out group-hover:scale-105 ${
+            isImageLoading 
+              ? 'scale-110 blur-2xl grayscale opacity-0' 
+              : 'scale-100 blur-0 grayscale-0 opacity-100'
           }`}
-          onLoadingComplete={() => setIsImageLoading(false)}
+          onLoad={() => setIsImageLoading(false)}
           onError={() => {
             setImageError(true);
             setIsImageLoading(false);
           }}
+          priority={project.featured}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </Link>
       <div className="p-4">

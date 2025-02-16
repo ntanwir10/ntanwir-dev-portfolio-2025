@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Inter } from "next/font/google";
@@ -8,6 +8,10 @@ import { Footer } from "@/components/layout/Footer";
 import { ConnectSectionWrapper } from "@/components/shared/ConnectSectionWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
 
 export const metadata: Metadata = {
   title: "Nauman Tanwir | Full Stack Engineer and Cloud Enthusiast",
@@ -53,7 +57,6 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/icons/site.webmanifest",
-  themeColor: "#ffffff",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

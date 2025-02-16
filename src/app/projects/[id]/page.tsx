@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from "react-icons/fa";
 import { Header } from "@/components/layout/Header";
 import { projects } from "@/lib/projects";
+import { ProjectImage } from "./ProjectImage";
 
 type Props = {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 };
 
 export function generateStaticParams() {
@@ -39,14 +39,7 @@ export default async function ProjectPage({ params }: Props) {
           </Link>
 
           <div className="grid gap-8 lg:grid-cols-2">
-            <div className="relative aspect-video overflow-hidden rounded-lg">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover"
-              />
-            </div>
+            <ProjectImage project={project} />
 
             <div>
               <h1 className="mb-4 text-4xl font-bold">{project.title}</h1>
