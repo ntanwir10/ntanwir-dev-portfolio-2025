@@ -2,7 +2,11 @@ import { Resend } from "resend";
 import { ContactFormEmail } from "@/emails/contact-form";
 import { NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Debug environment variables
+console.log("RESEND_API_KEY exists:", !!process.env.RESEND_API_KEY);
+console.log("CONTACT_EMAIL:", process.env.CONTACT_EMAIL);
+
+const resend = new Resend(process.env.RESEND_API_KEY || "");
 
 export async function POST(request: Request) {
   try {
@@ -14,6 +18,22 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
+      );
+    }
+
+    if (!process.env.RESEND_API_KEY) {
+      console.error("Missing Resend API key");
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 }
+      );
+    }
+
+    if (!process.env.CONTACT_EMAIL) {
+      console.error("Missing contact email");
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 }
       );
     }
 
@@ -36,4 +56,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-} 
+}
