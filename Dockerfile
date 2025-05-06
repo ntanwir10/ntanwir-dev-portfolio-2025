@@ -14,6 +14,12 @@ RUN npm install
 # Copy rest of application code
 COPY . .
 
+# Set environment variables at build time with defaults that can be overridden
+ARG RESEND_API_KEY
+ARG CONTACT_EMAIL
+ENV RESEND_API_KEY=${RESEND_API_KEY}
+ENV CONTACT_EMAIL=${CONTACT_EMAIL}
+
 # Build the application
 RUN npm run build
 
