@@ -1,0 +1,6 @@
+# These owners will be the default owners for everything in the repo
+* @ntanwir  # Replace with your GitHub username
+
+# CI/CD workflow files
+/.github/workflows/ @ntanwir  # Replace with your GitHub username
+/.aws/ @ntanwir  # Replace with your GitHub username

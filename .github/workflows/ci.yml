@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Build application
+        run: npm run build
+
+      - name: Build Docker image
+        run: docker build -t ntanwir-portfolio:test .
+        
+      - name: Test Docker image
+        run: |
+          docker run -d -p 3000:3000 --name portfolio-test ntanwir-portfolio:test
+          sleep 10
+          curl -s --retry 5 --retry-delay 5 http://localhost:3000/health | grep -q "status.*ok" || exit 1
