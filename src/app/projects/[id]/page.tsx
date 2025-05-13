@@ -8,7 +8,6 @@ import { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export function generateStaticParams() {
@@ -20,9 +19,9 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const { id } = await Promise.resolve(params);
+  const { id } = await params;
   const project = projects.find((p) => p.id === id);
 
   if (!project) {
@@ -37,9 +36,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProjectPage({ params, searchParams }: PageProps) {
-  const { id } = await Promise.resolve(params);
-  await Promise.resolve(searchParams); // we need to await this even if we don't use it
+export default async function ProjectPage({ params }: PageProps) {
+  const { id } = await params;
   const project = projects.find((p) => p.id === id);
 
   if (!project) {
