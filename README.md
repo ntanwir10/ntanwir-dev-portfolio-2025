@@ -18,7 +18,7 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Docker Development
+## Docker Containerization
 
 This project is containerized using Docker for consistent development and deployment environments. It uses a multi-stage Dockerfile with development, build, and production stages, along with Docker Compose for local development.
 
@@ -131,6 +131,70 @@ docker-compose down
 - Don't run containers as root
 - Use .dockerignore to exclude unnecessary files
 - Set appropriate environment variables for different environments
+
+
+## Podman Containerization
+
+This project also supports containerization using Podman, providing an alternative to Docker. The Podman setup is maintained separately in the `podman` directory.
+
+### Prerequisites for Podman
+
+- [Podman](https://podman.io/docs/installation) installed on your machine
+- [Podman Compose](https://github.com/containers/podman-compose) (optional, for using podman-compose.yml)
+
+### Podman Setup
+
+The project uses Red Hat Universal Base Image (UBI) with Node.js and includes:
+
+- Multi-stage Containerfile with dev, build, and production stages
+- Resource limits and health checks
+- Logging configuration
+- Production-focused environment
+
+### Podman Commands
+
+```bash
+# Initialize Podman machine (macOS only)
+podman machine init
+podman machine start
+
+# Build the image
+podman build -t portfolio -f podman/Containerfile .
+
+# Run in development mode
+podman run -it --rm -p 3000:3000 \
+  -e NODE_ENV=development \
+  -e RESEND_API_KEY=your_key \
+  -e NEXT_PUBLIC_SITE_URL=http://localhost:3000 \
+  portfolio:latest
+
+# Run in production mode
+podman run -d --name portfolio -p 3000:3000 \
+  -e RESEND_API_KEY=your_key \
+  -e NEXT_PUBLIC_SITE_URL=your_site_url \
+  portfolio:latest
+
+# Using Podman Compose
+cd podman
+podman-compose up -d  # Production mode
+NODE_ENV=development podman-compose up  # Development mode
+```
+
+### Podman Container Management
+
+```bash
+# View running containers
+podman ps
+
+# View container logs
+podman logs portfolio
+
+# Stop container
+podman stop portfolio
+
+# Remove container
+podman rm portfolio
+```
 
 ## NOTE
 
