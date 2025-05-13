@@ -2,6 +2,20 @@
 ARG NODE_VERSION=18
 ARG BASE_IMAGE=node:${NODE_VERSION}-alpine
 
+# Development stage for hot reloading
+FROM ${BASE_IMAGE} AS dev
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies with all development packages
+RUN npm install
+
+# Set development command with watch mode
+CMD ["npm", "run", "dev"]
+
 # Build stage
 FROM ${BASE_IMAGE} AS builder
 

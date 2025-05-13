@@ -6,7 +6,12 @@ import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { FaDownload, FaBars } from "react-icons/fa";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 
 const navigation = [
@@ -16,14 +21,35 @@ const navigation = [
   { name: "Contact", href: "/contact" },
 ];
 
-export function Header() {
-  const pathname = usePathname();
+// Create a separate client component for the theme toggle
+function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  if (!mounted) {
+    return <div className="w-10 h-10" />; // Placeholder with same dimensions
+  }
+
+  return (
+    <button
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      className="rounded-md p-2 hover:bg-accent"
+    >
+      {theme === "light" ? (
+        <MoonIcon className="h-5 w-5" />
+      ) : (
+        <SunIcon className="h-5 w-5" />
+      )}
+    </button>
+  );
+}
+
+export function Header() {
+  const pathname = usePathname();
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
@@ -92,18 +118,7 @@ export function Header() {
             <FaDownload className="h-4 w-4" />
             Download Resume
           </button>
-          {mounted && (
-            <button
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="rounded-md p-2 hover:bg-accent"
-            >
-              {theme === "light" ? (
-                <MoonIcon className="h-5 w-5" />
-              ) : (
-                <SunIcon className="h-5 w-5" />
-              )}
-            </button>
-          )}
+          <ThemeToggle />
         </div>
       </div>
     </header>

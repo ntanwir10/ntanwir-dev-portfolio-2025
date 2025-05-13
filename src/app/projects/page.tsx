@@ -12,6 +12,9 @@ const allTechnologies = Array.from(
   new Set(projects.flatMap((project) => project.technologies))
 ).sort();
 
+// Since this is a client component, we need to set the metadata in a separate file
+// Create a new file called projects/metadata.ts to handle this
+
 export default function Projects() {
   const [selectedTech, setSelectedTech] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,10 +34,10 @@ export default function Projects() {
     handleResize();
 
     // Add event listener
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Cleanup
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const filteredProjects = projects.filter((project) => {
@@ -48,9 +51,10 @@ export default function Projects() {
   });
 
   // Function to determine which tags to show
-  const tagsToShow = isMobile && !showAllTags 
-    ? allTechnologies.slice(0, INITIAL_TAG_COUNT)
-    : allTechnologies;
+  const tagsToShow =
+    isMobile && !showAllTags
+      ? allTechnologies.slice(0, INITIAL_TAG_COUNT)
+      : allTechnologies;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -60,16 +64,19 @@ export default function Projects() {
           <div className="mb-12">
             <h1 className="mb-4 text-4xl font-bold">Projects</h1>
             <p className="text-lg text-muted-foreground">
-              A collection of my recent projects, built with modern technologies.
+              A collection of my recent projects, built with modern
+              technologies.
             </p>
           </div>
 
           <div className="mb-8 space-y-4">
             {/* Search Projects Input */}
             <div className="flex justify-start">
-              <div className={`relative transition-all duration-300 ${
-                isSearchFocused ? "w-[300px]" : "w-[200px]"
-              }`}>
+              <div
+                className={`relative transition-all duration-300 ${
+                  isSearchFocused ? "w-[300px]" : "w-[200px]"
+                }`}
+              >
                 <input
                   type="text"
                   placeholder="Search projects..."
@@ -114,7 +121,9 @@ export default function Projects() {
                     onClick={() => setShowAllTags(!showAllTags)}
                     className="rounded-lg px-4 py-2 text-sm text-primary hover:text-primary/80 md:hidden"
                   >
-                    {showAllTags ? "Show Less" : `+${allTechnologies.length - INITIAL_TAG_COUNT} More`}
+                    {showAllTags
+                      ? "Show Less"
+                      : `+${allTechnologies.length - INITIAL_TAG_COUNT} More`}
                   </button>
                 )}
               </div>
@@ -139,4 +148,4 @@ export default function Projects() {
       </main>
     </div>
   );
-} 
+}

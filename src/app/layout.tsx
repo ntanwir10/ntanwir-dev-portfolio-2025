@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared/theme-provider";
@@ -14,8 +14,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Nauman Tanwir | Full Stack Engineer and Cloud Enthusiast",
-  description: "An experienced Full Stack engineer with a passion for building web applications and solving complex problems.",
+  title: {
+    template: "%s | Nauman Tanwir",
+    default: "Nauman Tanwir | DevOps & Full Stack Engineer",
+  },
+  description:
+    "I'm a Full Stack & DevOps Engineer with 7+ years of experience delivering high-performance web applications and secure cloud infrastructure.",
   icons: {
     icon: [
       {

@@ -1,16 +1,45 @@
 import { Header } from "@/components/layout/Header";
 import AboutSVG from "@/components/AboutSVG";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+};
 
 const skills = [
   {
-    category: "Frontend",
+    category: "DevOps & Infrastructure",
     technologies: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "JavaScript",
-      "Tailwind CSS",
-      "HTML5/CSS3",
+      "Git",
+      "GitHub Actions",
+      "Gitlab CI",
+      "Jenkins",
+      "YAML",
+      "Docker",
+      "Docker Compose",
+      "Kubernetes",
+      "Linux",
+      "Shell Scripting",
+      "Terraform",
+    ],
+  },
+  {
+    category: "AWS",
+    technologies: [
+      "AWS EC2",
+      "AWS S3",
+      "AWS Lambda",
+      "Amazon API Gateway",
+      "AWS CloudFormation",
+      "AWS ElastiCache",
+      "AWS ECR",
+      "AWS ECS",
+      "AWS EKS",
+      "AWS Fargate",
+      "AWS SNS",
+      "AWS SQS",
+      "AWS SES",
+      "AWS Secrets Manager",
     ],
   },
   {
@@ -38,45 +67,12 @@ const skills = [
       "AWS DynamoDB",
     ],
   },
-  {
-    category: "DevOps & Infrastructure",
-    technologies: [
-      "Git",
-      "GitHub Actions",
-      "Gitlab CI",
-      "Jenkins",
-      "YAML",
-      "Docker",
-      "Docker Compose",
-      "Kubernetes",
-      "Linux",
-      "Shell Scripting",
-      "Terraform",
-    ],
-  },
+
   {
     category: "Caching",
     technologies: ["Redis", "Memcached"],
   },
-  {
-    category: "AWS",
-    technologies: [
-      "AWS EC2",
-      "AWS S3",
-      "AWS Lambda",
-      "Amazon API Gateway",
-      "AWS CloudFormation",
-      "AWS ElastiCache",
-      "AWS ECR",
-      "AWS ECS",
-      "AWS EKS",
-      "AWS Fargate",
-      "AWS SNS",
-      "AWS SQS",
-      "AWS SES",
-      "AWS Secrets Manager",
-    ],
-  },
+
   {
     category: "Logging and Monitoring",
     technologies: [
@@ -101,6 +97,18 @@ const skills = [
     technologies: ["Stripe", "PayPal"],
   },
   {
+    category: "Frontend",
+    technologies: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "JavaScript",
+      "Tailwind CSS",
+      "HTML5/CSS3",
+    ],
+  },
+
+  {
     category: "Data visualization",
     technologies: ["Chart.js", "D3.js"],
   },
@@ -122,20 +130,32 @@ export default function About() {
                 <h1 className="mb-8 text-4xl font-bold">About Me</h1>
                 <div className="prose prose-lg dark:prose-invert">
                   <p className="text-lg text-muted-foreground">
-                    I am an experienced and passionate Full Stack Developer with
-                    a strong foundation in web technologies and a keen eye for
-                    creating elegant solutions to complex problems. My journey
-                    in software development has equipped me with a diverse skill
-                    set and the ability to work effectively across the entire
-                    development stack.
+                    I&apos;m a Full Stack & DevOps Engineer with 7+ years of
+                    experience delivering high-performance web applications and
+                    secure cloud infrastructure. I specialize in designing and
+                    building scalable systems using modern technologies across
+                    the stack—from frontend UIs to backend APIs and cloud-native
+                    deployments. On the full-stack side, I develop responsive,
+                    performance-driven applications using React, Redux, Node.js,
+                    and Python (FastAPI). My backend expertise includes REST API
+                    design, asynchronous processing, and optimized database
+                    modelling with PostgreSQL and NoSQL (e.g., DynamoDB).
+                    I&apos;ve led the development of scalable microservices
+                    architectures, reduced API response times by 35%, and
+                    streamlined data operations with modular design patterns.
                   </p>
                   <p className="mt-4 text-lg text-muted-foreground">
-                    I believe in writing clean, maintainable code and staying
-                    up-to-date with the latest industry trends and best
-                    practices. When I&apos;m not coding, you can find me
-                    exploring new technologies, contributing to open-source
-                    projects, or sharing my knowledge with the developer
-                    community.
+                    On the DevOps side, I have deep hands-on experience with
+                    AWS, Terraform, GitLab CI/CD, Docker, and Kubernetes,
+                    managing IaC environments and enforcing compliance through
+                    automated pipelines. I&apos;ve implemented secure CI/CD
+                    workflows, secrets management with AWS Secrets Manager, and
+                    self-healing deployments across production clusters. I bring
+                    a holistic engineering mindset—from architecting cloud
+                    infrastructure to writing clean, testable code. Whether you
+                    need an end-to-end application build, a DevOps
+                    transformation, or secure API integrations, I help teams
+                    move fast without compromising quality.
                   </p>
                 </div>
               </section>

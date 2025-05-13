@@ -8,6 +8,9 @@ import { Header } from "@/components/layout/Header";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+// Since this is a client component, we need to set the metadata in a separate file
+// Created a new file called contact/metadata.ts to handle this
+
 type FormData = {
   name: string;
   email: string;
@@ -60,7 +63,9 @@ export default function Contact() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || "Failed to send message. Please try again.");
+        throw new Error(
+          result.error || "Failed to send message. Please try again."
+        );
       }
 
       setSubmitSuccess(true);
@@ -68,7 +73,9 @@ export default function Contact() {
     } catch (error) {
       console.error("Error sending message:", error);
       setSubmitError(
-        error instanceof Error ? error.message : "Failed to send message. Please try again."
+        error instanceof Error
+          ? error.message
+          : "Failed to send message. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -84,7 +91,8 @@ export default function Contact() {
             <div className="mb-12 text-center">
               <h1 className="mb-4 text-4xl font-bold">Get in Touch</h1>
               <p className="text-lg text-muted-foreground">
-                Have a question or want to work together? Feel free to reach out!
+                Have a question or want to work together? Feel free to reach
+                out!
               </p>
             </div>
 
@@ -201,4 +209,4 @@ export default function Contact() {
       </main>
     </div>
   );
-} 
+}

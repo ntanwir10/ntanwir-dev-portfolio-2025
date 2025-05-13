@@ -4,6 +4,7 @@ import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from "react-icons/fa";
 import { Header } from "@/components/layout/Header";
 import { projects } from "@/lib/projects";
 import { ProjectImage } from "./ProjectImage";
+import { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -16,9 +17,29 @@ export function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const { id } = await Promise.resolve(params);
+  const project = projects.find((p) => p.id === id);
+
+  if (!project) {
+    return {
+      title: "Project Not Found",
+    };
+  }
+
+  return {
+    title: project.title,
+    description: project.description,
+  };
+}
+
 export default async function ProjectPage({ params, searchParams }: PageProps) {
-  const { id } = await params;
-  await searchParams; // we need to await this even if we don't use it
+  const { id } = await Promise.resolve(params);
+  await Promise.resolve(searchParams); // we need to await this even if we don't use it
   const project = projects.find((p) => p.id === id);
 
   if (!project) {
@@ -48,7 +69,9 @@ export default async function ProjectPage({ params, searchParams }: PageProps) {
               </p>
 
               <div className="mb-8">
-                <h2 className="mb-4 text-xl font-semibold">Technologies Used</h2>
+                <h2 className="mb-4 text-xl font-semibold">
+                  Technologies Used
+                </h2>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
                     <span
@@ -89,4 +112,4 @@ export default async function ProjectPage({ params, searchParams }: PageProps) {
       </main>
     </div>
   );
-} 
+}
