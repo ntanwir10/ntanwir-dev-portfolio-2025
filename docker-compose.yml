@@ -48,6 +48,18 @@ services:
     # Add network configuration
     networks:
       - app-network
+    # Add develop section for compose watch
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - .next/
+            - .git/
+        - action: rebuild
+          path: package.json
 
 networks:
   app-network:

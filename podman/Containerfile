@@ -1,0 +1,73 @@
+# Set base image as build argument
+ARG NODE_VERSION=18
+ARG BASE_IMAGE=registry.access.redhat.com/ubi8/nodejs-${NODE_VERSION}
+
+# Development stage for hot reloading
+FROM ${BASE_IMAGE} AS dev
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies with all development packages
+RUN npm install
+
+# Set development command with watch mode
+CMD ["npm", "run", "dev"]
+
+# Build stage
+FROM ${BASE_IMAGE} AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source code
+COPY . .
+
+# Build arguments for environment variables
+ARG RESEND_API_KEY
+ARG NEXT_PUBLIC_SITE_URL
+
+# Build the application
+RUN npm run build
+
+# Production stage
+FROM ${BASE_IMAGE} AS runner
+
+# Install curl for healthcheck
+RUN dnf install -y curl && dnf clean all
+
+WORKDIR /app
+
+# Create non-root user if it doesn't exist
+RUN id nextjs || useradd -r -u 1001 -g 0 nextjs
+
+# Copy only necessary files from builder
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+# Set proper ownership
+RUN chown -R nextjs:0 /app && \
+    chmod -R g+w /app
+
+# Switch to non-root user
+USER 1001
+
+# Set environment variables
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
+
+# Expose port
+EXPOSE 3000
+
+# Start the application
+CMD ["node", "server.js"] 
