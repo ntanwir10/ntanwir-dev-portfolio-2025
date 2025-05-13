@@ -1,15 +1,17 @@
-import type { NextConfig } from "next";
+import { type NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  output: 'standalone',
+const config: NextConfig = {
+  output: "standalone",
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'placehold.co',
+        protocol: "https",
+        hostname: "placehold.co",
       },
     ],
   },
+  poweredByHeader: false,
+  reactStrictMode: true,
 };
 
-export default nextConfig;
+export default config;

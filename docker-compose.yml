@@ -5,26 +5,34 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NODE_ENV=${NODE_ENV:-development}
     ports:
       - "3000:3000"
     env_file:
-      - .env.production
+      - ${ENV_FILE:-.env.local}
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+      - NEXT_PUBLIC_SITE_URL=http://localhost:3000
     # Added recommended settings for production
     restart: unless-stopped
-    # Add healthcheck to ensure container is running properly
+    # Add healthcheck using node
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 30s
     # Add resource limits
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 1G
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
     # Add logging configuration
     logging:
@@ -32,3 +40,10 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    # Add network configuration
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
