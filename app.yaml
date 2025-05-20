@@ -34,10 +34,3 @@ handlers:
 
 # Start command
 entrypoint: npm start
-# # Files to include
-# includes:
-#   - ^package\.json$
-#   - ^package-lock\.json$
-#   - ^\.next/.*$
-#   - ^public/.*$
-#   - ^next\.config\.js$
