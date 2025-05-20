@@ -1,0 +1,30 @@
+# This YAML configuration is defining the settings for a Node.js application deployment on a cloud platform.
+# Here is a breakdown of what each section is doing:
+
+# The runtime and environment settings
+runtime: nodejs20
+env: standard
+
+# The instance class for the application
+instance_class: F1 # Smallest/cheapest instance type (256MB memory)
+
+# The automatic scaling settings
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 0
+  max_instances: 1
+  target_throughput_utilization: 0.6
+
+# The handlers for the application
+handlers:
+  - url: /_next/static # Handles Next.js static assets
+    static_dir: .next/static
+    secure: always # Forces HTTPS
+
+  - url: /.* # Handles all other routes
+    script: auto
+    secure: always
+
+# The environment variables for the application
+env_variables:
+  NODE_ENV: "production"
