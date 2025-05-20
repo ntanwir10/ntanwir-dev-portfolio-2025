@@ -1,0 +1,43 @@
+# The runtime and environment settings
+runtime: nodejs20
+env: standard
+
+# The instance class for the application
+instance_class: F1 # Smallest/cheapest instance type (256MB memory)
+
+# The automatic scaling settings
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 0
+  max_instances: 1
+  target_throughput_utilization: 0.6
+
+# Environment variables
+env_variables:
+  NODE_ENV: "production"
+
+# Set the working directory
+service: default
+runtime_config:
+  operating_system: "ubuntu22"
+  runtime_version: "20"
+
+# Define handlers
+handlers:
+  - url: /_next/static
+    static_dir: .next/static
+    secure: always
+
+  - url: /.*
+    script: auto
+    secure: always
+
+# Start command
+entrypoint: npm start
+# # Files to include
+# includes:
+#   - ^package\.json$
+#   - ^package-lock\.json$
+#   - ^\.next/.*$
+#   - ^public/.*$
+#   - ^next\.config\.js$
